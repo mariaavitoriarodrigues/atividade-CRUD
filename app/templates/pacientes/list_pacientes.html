@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Pacientes</h2>
+
+<a href="{{ url_for('criar_paciente') }}">Criar Novo Paciente</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for paciente in pacientes %}
+        <tr>
+            <td>{{ paciente.get_nome() }}</td>
+            <td>{{ paciente.get_data_nascimento() }}</td>
+            <td>{{ paciente.get_telefone() }}</td>
+            <td>
+                <a href="{{ url_for('editar_paciente', id=paciente.get_id()) }}">Editar</a> |
+                <a href="{{ url_for('excluir_paciente', id=paciente.get_id()) }}">Deletar</a> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

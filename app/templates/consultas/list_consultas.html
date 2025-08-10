@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Consultas</h2>
+
+<a href="{{ url_for('criar_consulta') }}">Criar Nova Consulta</a>
+<table>
+    <thead>
+        <tr>
+            <th>Paciente</th>
+            <th>Data</th>
+            <th>Especialidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <td>{{ consulta.paciente_nome }}</td>
+            <td>{{ consulta.get_data() }}</td>
+            <td>{{ consulta.get_especialidade() }}</td>
+            <td>
+                <a href="{{ url_for('editar_consulta', id=consulta.get_id()) }}">Editar</a> |
+                <a href="{{ url_for('excluir_consulta', id=consulta.get_id()) }}">Deletar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

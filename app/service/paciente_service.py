@@ -38,4 +38,8 @@ class PacienteService:
     def delete_paciente(self, paciente_id):
         if paciente_id is None:
             raise ValueError("O ID do paciente não pode ser None.")
+        paciente_consultas = self.paciente_repository.get_all_pacientes()
+        for paciente in paciente_consultas:
+            if paciente.get_id() == paciente_id:
+                raise ValueError("Não é possível excluir um cliente com consultas associadas.")
         self.paciente_repository.delete_paciente(paciente_id)

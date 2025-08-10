@@ -40,8 +40,4 @@ class ConsultaService:
     def delete_consulta(self, consulta_id):
         if consulta_id is None:
             raise ValueError("O ID da categoria não pode ser None")
-        consultas = self.consulta_repository.get_all_consultas()
-        for consulta in consultas:
-            if consulta.get_consulta_id() == consulta_id:
-                raise ValueError("Não é possível excluir uma consulta quando ela possui um paciente associado.")
         self.consulta_repository.delete_consulta(consulta_id)

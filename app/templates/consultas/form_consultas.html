@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+{% if consulta %}Editar Consulta{% else %}Criar Consulta{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>{% if consulta %}Editar Consulta{% else %}Criar Consulta{% endif %}</h2>
+
+<form method="post">
+    Paciente:
+    <select name="id_paciente" required>
+        <option value="">Selecione um paciente</option>
+        {% for paciente in pacientes %}
+            <option value="{{ paciente.get_id() }}"
+                {% if consulta and paciente.get_id() == consulta.get_id_paciente() %}selected{% endif %}>
+                {{ paciente.get_nome() }}
+            </option>
+        {% endfor %}
+    </select><br>
+
+    Data da Consulta:
+    <input type="date" name="data" value="{{ consulta.get_data() if consulta else '' }}" required><br>
+
+    Especialidade:
+    <input type="text" name="especialidade" value="{{ consulta.get_especialidade() if consulta else '' }}"><br>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<a href="{{ url_for('listar_consultas') }}">Voltar para a lista de consultas</a>
+{% endblock %}
