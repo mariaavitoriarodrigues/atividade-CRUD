@@ -65,13 +65,3 @@ class ConsultaRepository:
         cursor.execute("DELETE FROM consulta WHERE id = ?", (consulta_id,))
         connection.commit()
         
-    def get_paciente_by_consulta_id(self, consulta_id):
-        connection = get_db()
-        cursor = connection.cursor()
-        cursor.execute("""
-            SELECT p.*
-            FROM paciente p
-            JOIN consulta c ON c.id_paciente = p.id
-            WHERE c.id = ?
-        """, (consulta_id,))
-        return cursor.fetchone()

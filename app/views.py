@@ -11,7 +11,7 @@ paciente_service = PacienteService()
 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    return redirect(url_for('listar_pacientes'))
 
 @app.route('/pacientes')
 def listar_pacientes():

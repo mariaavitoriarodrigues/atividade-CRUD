@@ -44,4 +44,8 @@ class PacienteRepository:
         cursor.execute("DELETE FROM paciente WHERE id = ?", (id,))
         connection.commit()
         
-        
+    def get_consulta_by_paciente_id(self, paciente_id):
+        connection = get_db()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM consulta WHERE id_paciente = ?", (paciente_id,))
+        return cursor.fetchall()

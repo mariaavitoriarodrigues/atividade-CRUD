@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from app.repository.consulta_repository import ConsultaRepository
 from app.models.consulta_model import ConsultaModel
 from app.repository.paciente_repository import PacienteRepository
@@ -6,7 +7,25 @@ class ConsultaService:
     def __init__(self):
         self.consulta_repository = ConsultaRepository()
         self.paciente_repository = PacienteRepository()
-        
+
+    def validar_data_consulta(self, data_consulta):
+        """Valida se a data da consulta não é no passado."""
+        # Se vier como string no formato YYYY-MM-DD (padrão HTML)
+        if isinstance(data_consulta, str):
+            try:
+                data_consulta = datetime.strptime(data_consulta, "%Y-%m-%d").date()
+            except ValueError:
+                raise ValueError("Formato de data inválido. Use o formato YYYY-MM-DD.")
+
+        if not isinstance(data_consulta, date):
+            raise ValueError("A data da consulta deve ser um objeto date válido.")
+
+        hoje = date.today()
+        if data_consulta < hoje:
+            raise ValueError("Não é possível marcar consultas para datas que já passaram.")
+
+        return data_consulta
+
     def get_all_consultas(self):
         return self.consulta_repository.get_all_consultas()
     
@@ -24,6 +43,10 @@ class ConsultaService:
             raise ValueError("A especialidade deve ter pelo menos 3 caracteres.")
         if not self.paciente_repository.get_paciente_by_id(consulta.get_id_paciente()):
             raise ValueError("O paciente informado não existe.")
+
+        # Validação da data
+        consulta.set_data(self.validar_data_consulta(consulta.get_data()))
+
         self.consulta_repository.create_consulta(consulta)
         
     def update_consulta(self, consulta: ConsultaModel):
@@ -35,6 +58,9 @@ class ConsultaService:
             raise ValueError("A especialidade deve ter pelo menos 3 caracteres.")
         if not self.paciente_repository.get_paciente_by_id(consulta.get_id_paciente()):
             raise ValueError("O paciente informado não existe.")
+
+        consulta.set_data(self.validar_data_consulta(consulta.get_data()))
+
         self.consulta_repository.update_consulta(consulta)
         
     def delete_consulta(self, consulta_id):

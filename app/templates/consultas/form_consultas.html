@@ -7,25 +7,26 @@
 <h2>{% if consulta %}Editar Consulta{% else %}Criar Consulta{% endif %}</h2>
 
 <form method="post">
-    Paciente:
-    <select name="id_paciente" required>
-        <option value="">Selecione um paciente</option>
+    <label for="id_paciente">Paciente:</label>
+    <select name="id_paciente" id="id_paciente" required>
+        <option value="" disabled selected hidden>Selecione um paciente</option>
         {% for paciente in pacientes %}
             <option value="{{ paciente.get_id() }}"
                 {% if consulta and paciente.get_id() == consulta.get_id_paciente() %}selected{% endif %}>
                 {{ paciente.get_nome() }}
             </option>
         {% endfor %}
-    </select><br>
+    </select>
 
-    Data da Consulta:
-    <input type="date" name="data" value="{{ consulta.get_data() if consulta else '' }}" required><br>
+    <label for="data">Data da Consulta:</label>
+    <input type="date" id="data" name="data" value="{{ consulta.get_data() if consulta else '' }}" required>
 
-    Especialidade:
-    <input type="text" name="especialidade" value="{{ consulta.get_especialidade() if consulta else '' }}"><br>
+    <label for="especialidade">Especialidade:</label>
+    <input type="text" id="especialidade" placeholder="Cardiologista, Pediatra, Dermatologista..." name="especialidade" value="{{ consulta.get_especialidade() if consulta else '' }}">
 
     <button type="submit">Salvar</button>
 </form>
+
 
 <a href="{{ url_for('listar_consultas') }}">Voltar para a lista de consultas</a>
 {% endblock %}

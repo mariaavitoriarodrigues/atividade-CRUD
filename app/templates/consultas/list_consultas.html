@@ -3,6 +3,7 @@
 <h2>Consultas</h2>
 
 <a href="{{ url_for('criar_consulta') }}">Criar Nova Consulta</a>
+
 <table>
     <thead>
         <tr>
@@ -26,4 +27,8 @@
         {% endfor %}
     </tbody>
 </table>
+
+<p>
+    <a href="{{ url_for('listar_pacientes') }}">Ver Pacientes</a>
+</p>
 {% endblock %}

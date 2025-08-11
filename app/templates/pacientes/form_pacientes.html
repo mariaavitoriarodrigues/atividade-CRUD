@@ -7,17 +7,18 @@
 <h2>{% if paciente %}Editar Paciente{% else %}Criar Paciente{% endif %}</h2>
 
 <form method="post">
-    Nome: 
-    <input type="text" name="nome" value="{{ paciente.get_nome() if paciente else '' }}" required><br>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ paciente.get_nome() if paciente else '' }}" required>
 
-    Data de Nascimento:
-    <input type="date" name="data_nascimento" value="{{ paciente.get_data_nascimento() if paciente else '' }}" required><br>
+    <label for="data_nascimento">Data de Nascimento:</label>
+    <input type="date" id="data_nascimento" name="data_nascimento" value="{{ paciente.get_data_nascimento() if paciente else '' }}" required>
 
-    Telefone:
-    <input type="text" name="telefone" value="{{ paciente.get_telefone() if paciente else '' }}" required><br>
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" name="telefone" value="{{ paciente.get_telefone() if paciente else '' }}" required>
 
     <button type="submit">Salvar</button>
 </form>
 
 <a href="{{ url_for('listar_pacientes') }}">Voltar para a lista de pacientes</a>
+
 {% endblock %}
